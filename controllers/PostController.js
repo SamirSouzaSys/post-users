@@ -14,7 +14,9 @@ class PostController {
     // custom methods
 
     async index(req, res) {
-        return res.send(await Post.find({})) // find sem nenhum parâmetro - poderia ter um {título}
+        // populate - recebe um relacionamento - lá do model
+        // campos separados por espaço, trará somente esses campos
+        return res.send(await Post.find({}).populate('autor', 'nome email')) // find sem nenhum parâmetro - poderia ter um {título}
     }
 
     async show (req, res) {
@@ -28,7 +30,8 @@ class PostController {
     }
 
     async store (req, res) {
-        await Post.create(req.body)
+        // await Post.create(req.body)
+        await Post.create({...req.body, autor: req.usuarioId})
         return res.sendStatus(201)
     }
 
