@@ -1,6 +1,7 @@
 require('./config/mongoose')
 const express = require("express")
 
+
 // removido pra um lugar correto seguindo o padrão do Post
 // atalho tbm
 // const validator = require('express-joi-validation').createValidator({passError: true})
@@ -17,10 +18,14 @@ const PostRoutes = require('./routes/PostRoutes')
 const UsuarioRoutes = require('./routes/UsuarioRoutes')
 const AuthRoutes = require('./routes/AuthRoutes')
 
+const AuthMiddleware = require('./middlewares/authMiddleware')
+const authMiddleware = require('./middlewares/authMiddleware')
+
 const app = express()
 // um middleware - executa antes de algo
 app.use(express.json())
 
+// app.get("/", authMiddleware, (req, res) => {
 app.get("/", (req, res) => {
   // res.send('Hello world')
   res.send("Hello ")
@@ -41,6 +46,9 @@ app.use('/auth', AuthRoutes)
 // ;; removido para usuarioRoutes
 // app.post('/usuarios', validator.body(UsuarioValidator), UsuarioController.store)
 app.use('/usuarios', UsuarioRoutes)
+
+// a partir daqui todas as rotas abaixo são protegidas
+app.use(authMiddleware)
 
 // to file PostRoutes
 // app.get('/posts', PostController.index)
