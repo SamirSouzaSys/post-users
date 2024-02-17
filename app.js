@@ -44,4 +44,19 @@ app.use('/posts', PostRoutes)
 
 // testar()
 
+// error handler
+// express - quando há 4 parâmetros, o primeiro é de tratamento de erro
+app.use((err, req, res, next) => {
+  // veio devido ao framework Joi
+  if(err && err.error && err.error.isJoi) {
+    res.status(400).json({
+      tipo: err.type,
+      mensagem: err.error.toString()
+    })
+  } else {
+    // deixa pra o próx middleware
+    next(err)
+  }
+})
+
 app.listen("4000")
