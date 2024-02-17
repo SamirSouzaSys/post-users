@@ -1,8 +1,8 @@
 require('./config/mongoose')
-
 const express = require("express")
 
-const Post = require('./models/Post')
+// const Post = require('./models/Post')
+const PostController = require('./controllers/PostController')
 
 const app = express()
 
@@ -13,14 +13,15 @@ app.get("/", (req, res) => {
   res.send("Hello ")
 })
 
-app.post('/posts', async (req, res) => {
-  // post a partir dos dados vindo via http
-  const postCriado = await Post.create(req.body)
-  console.log(postCriado)
-  // manda pra o front
-  res.sendStatus(201)
-})
- 
+// app.post('/posts', async (req, res) => {
+//   // post a partir dos dados vindo via http
+//   const postCriado = await Post.create(req.body)
+//   console.log(postCriado)
+//   // manda pra o front
+//   res.sendStatus(201)
+// })
+app.get('/posts', PostController.index)
+app.post('/posts', PostController.store)
 
 // // async function testar () {}
 // const testar = async () => {
