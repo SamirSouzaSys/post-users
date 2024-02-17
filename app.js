@@ -1,10 +1,15 @@
 require('./config/mongoose')
 const express = require("express")
 
+// atalho tbm
+const validator = require('express-joi-validation').createValidator({passError: true})
+const UsuarioValidator = require('./validators/UsuarioValidator')
 // const Post = require('./models/Post')
 
 // const PostController = require('./controllers/PostController')
 const PostRoutes = require('./routes/PostRoutes')
+//atalho no arquivo
+const UsuarioController = require('./controllers/UsuarioController')
 
 const app = express()
 // um middleware - executa antes de algo
@@ -22,6 +27,8 @@ app.get("/", (req, res) => {
 //   // manda pra o front
 //   res.sendStatus(201)
 // })
+
+app.post('/usuarios', validator.body(UsuarioValidator), UsuarioController.store)
 
 // to file PostRoutes
 // app.get('/posts', PostController.index)
