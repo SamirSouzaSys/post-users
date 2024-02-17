@@ -36,13 +36,24 @@ class PostController {
         // poderia ter um try catch pra algo mais complexo e que será usado em produção
         // Ou api para log da aplicação
 
+        // ErrorHandler - seria interessante
+        //  capturar os erros e devolver para tratamento
+
+        // criar políticas de validação do usuário - Antes de executar as coisas
+
         // try{
             // poderia fazer os métodos separados - Find e depois o Update
-            await Post.finfByIdAndUpdate(req.params.postId, req.body)
+            // sem ID correto há erro
+            await Post.findByIdAndUpdate(req.params.postId, req.body)
             return res.sendStatus(200)
         // } catch (err) {
         //     console.log(err)
         // }
+    }
+
+    async delete (req, res){
+        await Post.findByIdAndDelete(req.params.postId)
+        return res.sendStatus(200)
     }
 }
 
