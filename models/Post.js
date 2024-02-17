@@ -21,7 +21,7 @@ const PostSchema = new mongoose.Schema({
         required: true
     },
     // OneToMany -> belongs to many
-    comentario: [{
+    comentarios: [{
         type: mongoose.Schema.Types.ObjectId, // segue o padrão de uma FK - linkar models
         ref: 'Comentario', // referenciar model
         required: true
