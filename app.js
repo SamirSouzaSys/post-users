@@ -1,15 +1,18 @@
 require('./config/mongoose')
 const express = require("express")
 
+// removido pra um lugar correto seguindo o padrão do Post
 // atalho tbm
-const validator = require('express-joi-validation').createValidator({passError: true})
-const UsuarioValidator = require('./validators/UsuarioValidator')
+// const validator = require('express-joi-validation').createValidator({passError: true})
+// const UsuarioValidator = require('./validators/UsuarioValidator')
+
 // const Post = require('./models/Post')
 
 // const PostController = require('./controllers/PostController')
 const PostRoutes = require('./routes/PostRoutes')
-//atalho no arquivo
-const UsuarioController = require('./controllers/UsuarioController')
+//antigo atalho para um arquivo
+// const UsuarioController = require('./controllers/UsuarioController')
+const UsuarioRoutes = require('./routes/UsuarioRoutes')
 
 const app = express()
 // um middleware - executa antes de algo
@@ -28,7 +31,9 @@ app.get("/", (req, res) => {
 //   res.sendStatus(201)
 // })
 
-app.post('/usuarios', validator.body(UsuarioValidator), UsuarioController.store)
+// ;; removido para usuarioRoutes
+// app.post('/usuarios', validator.body(UsuarioValidator), UsuarioController.store)
+app.use('/usuarios', UsuarioRoutes)
 
 // to file PostRoutes
 // app.get('/posts', PostController.index)

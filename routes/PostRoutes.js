@@ -6,7 +6,7 @@ const routes = require('express').Router()
 // passa as funções de roteamento pra ele
 const PostController = require('../controllers/PostController')
 
-//captura o error, mas deixa que outro processe essa situação
+//captura o error, mas deixa que outra parte processe essa situação
 const validator = require('express-joi-validation').createValidator({passError: true})
 const PostValidator = require('../validators/PostValidator')
 
