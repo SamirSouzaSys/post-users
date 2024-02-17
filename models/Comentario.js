@@ -24,6 +24,6 @@ const ComentarioSchema = new mongoose.Schema({
         ref: 'Post', // como se fosse um FK
         required: true
     }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model('Comentario', ComentarioSchema)
