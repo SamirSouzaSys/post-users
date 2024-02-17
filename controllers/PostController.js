@@ -3,7 +3,7 @@ const Post = require('../models/Post') // não precisa colocar o JS
 class PostController {
     // default methods - convensão
     // index   // listagem
-    // show    // detalhar
+    // show    // detalhar a partir de um id
     // create  // get dos dados que serão necessários no post
     // store   // post
     // edit    // get semelhante ao create - busca dados necessários para a tela de edição
@@ -17,9 +17,32 @@ class PostController {
         return res.send(await Post.find({})) // find sem nenhum parâmetro - poderia ter um {título}
     }
 
+    async show (req, res) {
+        const postEncontrado = await Post.findById(req.params.postId)
+
+        if(postEncontrado) {
+            return res.send(postEncontrado)
+        }
+
+        return res.sendStatus(404)
+    }
+
     async store (req, res) {
         await Post.create(req.body)
         return res.sendStatus(201)
+    }
+
+    async update (req, res) {
+        // poderia ter um try catch pra algo mais complexo e que será usado em produção
+        // Ou api para log da aplicação
+
+        // try{
+            // poderia fazer os métodos separados - Find e depois o Update
+            await Post.finfByIdAndUpdate(req.params.postId, req.body)
+            return res.sendStatus(200)
+        // } catch (err) {
+        //     console.log(err)
+        // }
     }
 }
 

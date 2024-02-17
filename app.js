@@ -2,10 +2,12 @@ require('./config/mongoose')
 const express = require("express")
 
 // const Post = require('./models/Post')
-const PostController = require('./controllers/PostController')
+
+// const PostController = require('./controllers/PostController')
+const PostRoutes = require('./routes/PostRoutes')
 
 const app = express()
-
+// um middleware - executa antes de algo
 app.use(express.json())
 
 app.get("/", (req, res) => {
@@ -20,8 +22,12 @@ app.get("/", (req, res) => {
 //   // manda pra o front
 //   res.sendStatus(201)
 // })
-app.get('/posts', PostController.index)
-app.post('/posts', PostController.store)
+
+// to file PostRoutes
+// app.get('/posts', PostController.index)
+// Vai no PostRoutes e ver se tem um tratamento dessa rota
+app.use('/posts', PostRoutes)
+// app.post('/posts', PostController.store)
 
 // // async function testar () {}
 // const testar = async () => {
