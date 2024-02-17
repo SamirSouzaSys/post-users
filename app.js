@@ -13,6 +13,7 @@ const express = require("express")
 
 // const PostController = require('./controllers/PostController')
 const PostRoutes = require('./routes/PostRoutes')
+const ComentarioRoutes = require('./routes/ComentarioRoutes')
 //antigo atalho para um arquivo
 // const UsuarioController = require('./controllers/UsuarioController')
 const UsuarioRoutes = require('./routes/UsuarioRoutes')
@@ -55,6 +56,7 @@ app.use(authMiddleware)
 // Vai no PostRoutes e ver se tem um tratamento dessa rota
 app.use('/posts', PostRoutes)
 // app.post('/posts', PostController.store)
+app.use('/comentarios', ComentarioRoutes)
 
 // // async function testar () {}
 // const testar = async () => {
