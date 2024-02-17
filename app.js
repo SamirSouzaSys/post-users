@@ -8,11 +8,14 @@ const express = require("express")
 
 // const Post = require('./models/Post')
 
+// const AuthValidator = require('./validators/AuthValidator')
+
 // const PostController = require('./controllers/PostController')
 const PostRoutes = require('./routes/PostRoutes')
 //antigo atalho para um arquivo
 // const UsuarioController = require('./controllers/UsuarioController')
 const UsuarioRoutes = require('./routes/UsuarioRoutes')
+const AuthRoutes = require('./routes/AuthRoutes')
 
 const app = express()
 // um middleware - executa antes de algo
@@ -22,6 +25,10 @@ app.get("/", (req, res) => {
   // res.send('Hello world')
   res.send("Hello ")
 })
+
+// pode ser feito diretamente no método o require
+// app.post('/auth', validator.body(require('.')), AuthController.store)
+app.use('/auth', AuthRoutes) 
 
 // app.post('/posts', async (req, res) => {
 //   // post a partir dos dados vindo via http
