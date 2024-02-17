@@ -1,4 +1,5 @@
-const Post = require("../models/Post") // não precisa colocar o JS
+// const Post = require("../models/Post") // não precisa colocar o JS
+const models = require("../models") // não precisa colocar o JS
 
 class PostController {
   // default methods - convensão
@@ -16,11 +17,31 @@ class PostController {
   async index(req, res) {
     // populate - recebe um relacionamento - lá do model
     // campos separados por espaço, trará somente esses campos
-    return res.send(await Post.find({}).populate("autor", "nome email")) // find sem nenhum parâmetro - poderia ter um {título}
+    // return res.send(await models.Post.find({}).populate("autor", "nome email")) // find sem nenhum parâmetro - poderia ter um {título}
+
+    // mongoose paginate
+    // poderia fazer um filtro - Post.paginate({autor: 123123}) - uma query
+    // populate diferente - 
+    // return res.send(await Post.paginate({},{
+   
+    return res.send(await models.Post.paginate({},{
+      page: req.query.page || 1,
+      // limit: 2,
+      limit: req.query.page || 2,
+      sort: 'createdAt', // padrão ASC, quiser inverter é só adicionar um traço '-' antes
+      populate: [
+        {
+          path: 'autor',
+          select: 'nome email'
+        }
+      ]
+    }
+    )) // find sem nenhum parâmetro - poderia ter um {título}
   }
 
   async show(req, res) {
-    const postEncontrado = await Post.findById(req.params.postId)
+    // const postEncontrado = await Post.findById(req.params.postId)
+    const postEncontrado = await models.Post.findById(req.params.postId)
     // seria a mesma função da parte de baixo - short sintaxe
     //   .populate("autor", {select: "nome email"})
       .populate("autor", "nome email")
@@ -42,7 +63,8 @@ class PostController {
 
   async store(req, res) {
     // await Post.create(req.body)
-    await Post.create({ ...req.body, autor: req.usuarioId })
+    // await Post.create({ ...req.body, autor: req.usuarioId })
+    await models.Post.create({ ...req.body, autor: req.usuarioId })
     return res.sendStatus(201)
   }
 
@@ -58,7 +80,8 @@ class PostController {
     // try{
     // poderia fazer os métodos separados - Find e depois o Update
     // sem ID correto há erro
-    await Post.findByIdAndUpdate(req.params.postId, req.body)
+    await models.Post.findByIdAndUpdate(req.params.postId, req.body)
+    // await Post.findByIdAndUpdate(req.params.postId, req.body)
     return res.sendStatus(200)
     // } catch (err) {
     //     console.log(err)
@@ -66,7 +89,8 @@ class PostController {
   }
 
   async delete(req, res) {
-    await Post.findByIdAndDelete(req.params.postId)
+    // await Post.findByIdAndDelete(req.params.postId)
+    await models.Post.findByIdAndDelete(req.params.postId)
     return res.sendStatus(200)
   }
 }

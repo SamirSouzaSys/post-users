@@ -29,6 +29,7 @@ const UsuarioSchema = new mongoose.Schema({
 // pre
 // antes do momento executa algo
 // function -> deve ser escrita dessa forma, pois da outra forma '=>' não há acesso ao this
+// hooks
 UsuarioSchema.pre('save', async function (next) {
     if(!this.isModified('senha')) {
         return next()

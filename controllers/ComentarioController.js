@@ -1,9 +1,12 @@
-const Comentario = require('../models/Comentario')
-const Post = require('../models/Post')
+// const Comentario = require('../models/Comentario')
+// const Post = require('../models/Post')
+
+const models = require('../models')
 
 class ComentarioController {
     async store(req, res) {
-        const comentarioCadastrado = await Comentario.create({
+        // const comentarioCadastrado = await Comentario.create({
+        const comentarioCadastrado = await models.Comentario.create({
             ...req.body,
             likes: 0,
             autor: req.usuarioId,
@@ -11,7 +14,7 @@ class ComentarioController {
             post: req.params.postId
         })
 
-        const post = await Post.findById(req.params.postId)
+        const post = await models.Post.findById(req.params.postId)
         post.comentarios.push(comentarioCadastrado.id)
         // save vai servir como um update
         await post.save()
@@ -23,7 +26,7 @@ class ComentarioController {
         // transforma operações do mongoose que são assíncronas em síncronas
         // :comentarioId
         // no lugar do {} poderia usar o req.boy, mas não queremos todo o objetto
-        await Comentario.findByIdAndUpdate(req.params.comentarioId, {
+        await models.Comentario.findByIdAndUpdate(req.params.comentarioId, {
             // likes = likes + 1 -> mas aí teríamos que consultar esse valor antes
             // operador mongoose / mongoDb
             // $set likes -> o mongoose faz isso, semelhante ao set do sql

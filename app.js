@@ -75,6 +75,7 @@ app.use('/comentarios', ComentarioRoutes)
 
 // error handler
 // express - quando há 4 parâmetros, o primeiro é de tratamento de erro
+// user sentry
 app.use((err, req, res, next) => {
   // veio devido ao framework Joi
   if(err && err.error && err.error.isJoi) {

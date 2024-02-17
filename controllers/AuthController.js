@@ -10,6 +10,7 @@ class AuthController {
             return res.status(400).json({error: 'E-mail/senha inválidos'})
         }
 
+        // TODO adicionar refresh token - lembrar-me - logar automaticamente
         return res.json({token: Usuario.gerarToken(usuarioEncontrado)})
     }
 }

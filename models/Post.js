@@ -1,6 +1,6 @@
 // Model
-
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const PostSchema = new mongoose.Schema({
     // id - automático
@@ -31,5 +31,7 @@ const PostSchema = new mongoose.Schema({
     // createdAt
     // updatedAt
 })
+
+PostSchema.plugin(mongoosePaginate)
 
 module.exports = mongoose.model('Post', PostSchema)
