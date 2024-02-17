@@ -1,33 +1,40 @@
+require('./config/mongoose')
+
 const express = require("express")
-const mongoose = require('mongoose')
+
+const Post = require('./models/Post')
 
 const app = express()
 
-app.get("/:nome", (req, res) => {
+app.use(express.json())
+
+app.get("/", (req, res) => {
   // res.send('Hello world')
-  res.send("Hello " + req.params.nome)
+  res.send("Hello ")
 })
 
-mongoose.connect(
-  "mongodb+srv://samirguitar:QtfX9VO3aF5FWFjP@cluster0.8esoif9.mongodb.net/?retryWrites=true&w=majority"
-//   ,{
-    // useNewUrlParser: true,
-    // useFindAnModify: true}
-)
+app.post('/posts', async (req, res) => {
+  // post a partir dos dados vindo via http
+  const postCriado = await Post.create(req.body)
+  console.log(postCriado)
+  // manda pra o front
+  res.sendStatus(201)
+})
+ 
 
-// async function testar () {}
-const testar = async () => {
-  const Test = mongoose.model("Test", { name: String })
+// // async function testar () {}
+// const testar = async () => {
+//   const Test = mongoose.model("Test", { name: String })
 
-  const t = new Test({
-    name: "Testando mongoose novamente",
-  })
+//   const t = new Test({
+//     name: "Testando mongoose novamente",
+//   })
 
-  await t.save().then(() => {
-    console.log('Objeto criado')
-  })
-}
+//   await t.save().then(() => {
+//     console.log('Objeto criado')
+//   })
+// }
 
-testar()
+// testar()
 
 app.listen("4000")
